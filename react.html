@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <link rel="stylesheet" type="text/css" href="css/reactcss.css">
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/react@15/dist/react-with-addons.js"></script> 
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+
+    <div id="comp4"></div>
+
+    <script type="text/babel">
+
+      var headers = ["Song","Artist","Genre", "Album", "Year"];
+
+      var data = [
+        ["Angel On My Shoulder", "Kaskade", "House", "Strobelight Seduction", "2008"],
+        ["Forget It(feat. Oliver Tree)", "Getter", "Dubstep", "Radical Dude", "2016"],
+        ["Flicker", "Porter Robinson", "Electro House", "Worlds", "2014"],
+        ["Pr0", "Marshmello", "Trap House", "Joytime", "2016"],
+        ["Castles(feat. BYNON)", "Project 46", "House", "Single", "2016"],
+      ];
+
+      var faveMusic = React.createClass({
+        displayName: 'faveMusic',
+        render: function() {
+          return(
+          React.DOM.table(null,    //<table>
+            React.DOM.thead(null,   //<thead>
+              React.DOM.tr(null,    //<tr>
+                this.props.headers.map(function(title, idx){ //gets the values in the headers map array
+                  return React.DOM.th({kay: idx}, title);     //the values in the title become the values in array header
+                 })                                     //the function is a callback funtiom
+                )
+              )
+            )
+          );
+        }
+      });
+
+      ReactDOM.render(
+        React.createElement(faveMusic, {
+          headers: headers,
+          initialData: data,
+        }),
+        document.getElementById("comp4")
+        );
+    </script>
+  </body>
+</html>
