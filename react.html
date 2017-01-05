@@ -27,20 +27,47 @@
 
       var faveMusic = React.createClass({
         displayName: 'faveMusic',
+
+        propTypes: {
+          headers: React.PropTypes.arrayOf(
+            React.PropTypes.string
+            ),
+          initialData: React.PropTypes.arrayOf(
+            React.PropTypes.arrayOf(
+              React.PropTypes.string 
+              )
+            ),
+        },
+
+        getInitialState: function() {
+          return {data: this.props.initialData};
+        },
+
         render: function() {
           return(
           React.DOM.table(null,    //<table>
             React.DOM.thead(null,   //<thead>
               React.DOM.tr(null,    //<tr>
                 this.props.headers.map(function(title, idx){ //gets the values in the headers map array
-                  return React.DOM.th({kay: idx}, title);     //the values in the title become the values in array header
-                 })                                     //the function is a callback funtiom
-                )
-              )
-            )
-          );
-        }
-      });
+                  return React.DOM.th({key: idx}, title);   //the values in the title become the values in array header
+                 }) //function                              //the function is a callback funtiom
+                )//tr
+              ),//thead
+            React.DOM.tbody(null,
+              this.state.data.map(function(row, idx) { //outter loop
+                return (
+                  React.DOM.tr({key: idx},
+                    row.map(function(cell, idx) { //inner loop
+                      return React.DOM.td({key: idx}, cell);
+                    })
+                  )
+                );
+              })
+             )
+            ) //table
+          ); //return
+        } //funct
+      }); //faveMusic
 
       ReactDOM.render(
         React.createElement(faveMusic, {
