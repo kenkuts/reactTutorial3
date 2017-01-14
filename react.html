@@ -13,7 +13,7 @@
 
     <div id="comp4"></div>
 
-    <script type="text/babel">
+    <script type="text/babel">    
 
       var headers = ["Song","Artist","Genre", "Album", "Year"];
 
@@ -23,30 +23,47 @@
         ["Flicker", "Porter Robinson", "Electro House", "Worlds", "2014"],
         ["Pr0", "Marshmello", "Trap House", "Joytime", "2016"],
         ["Castles(feat. BYNON)", "Project 46", "House", "Single", "2016"],
+        ["Sunday", "Bloc Party", "Indie", "A Weekend In The City","2007"],
       ];
 
       var faveMusic = React.createClass({
         displayName: 'faveMusic',
 
         propTypes: {
-          headers: React.PropTypes.arrayOf(
-            React.PropTypes.string
+          headers: 
+            React.PropTypes.arrayOf(     //accepts arrays
+            React.PropTypes.string       //accepts a string of arrays
             ),
-          initialData: React.PropTypes.arrayOf(
-            React.PropTypes.arrayOf(
-              React.PropTypes.string 
+          initialData: 
+            React.PropTypes.arrayOf(      //accepts an array
+              React.PropTypes.arrayOf(    //accepts a 2d array
+                React.PropTypes.any    //accepts a 2d array of any data type
               )
             ),
         },
 
         getInitialState: function() {
-          return {data: this.props.initialData};
+          return {
+            data:
+             this.props.initialData};
+        },
+
+        _sort: function(e) {
+          var column = e.target.cellIndex;
+          var data = this.state.data.slice();
+
+          data.sort(function(a,b) {
+            return a[column] > b[column];
+          });
+          this.setState({
+            data: data
+          });
         },
 
         render: function() {
           return(
-          React.DOM.table(null,    //<table>
-            React.DOM.thead(null,   //<thead>
+          React.DOM.table({ style: {border: "1px solid red", paddingRight: "10px",}},    //<table>
+            React.DOM.thead({onClick: this._sort},   //<thead>
               React.DOM.tr(null,    //<tr>
                 this.props.headers.map(function(title, idx){ //gets the values in the headers map array
                   return React.DOM.th({key: idx}, title);   //the values in the title become the values in array header
@@ -58,7 +75,7 @@
                 return (
                   React.DOM.tr({key: idx},
                     row.map(function(cell, idx) { //inner loop
-                      return React.DOM.td({key: idx}, cell);
+                      return React.DOM.td({key: idx}, cell);   //the key assings a number for each array iteration 
                     })
                   )
                 );
